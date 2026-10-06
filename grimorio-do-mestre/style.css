@@ -1,0 +1,825 @@
+/* =====================================================================
+   O GRIMÓRIO DO MESTRE - ESTILO PERGAMINHO & COURO CLÁSSICO
+   ===================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=MedievalSharp&family=Lora:ital,wght@0,400;0,600;1,400&family=Marcellus&display=swap');
+
+:root {
+  --leather-dark: #1b110b;
+  --leather-mid: #2e1c12;
+  --leather-light: #442a1a;
+  --leather-border: #5a3822;
+  
+  --parchment-base: #f7eedb;
+  --parchment-mid: #ede1c4;
+  --parchment-aged: #dfcfab;
+  --parchment-border: #b89c72;
+  --parchment-shadow: rgba(43, 24, 12, 0.15);
+
+  --ink-dark: #23160e;
+  --ink-mid: #4a3424;
+  --ink-faded: #785a43;
+  --ink-light: #9e7f65;
+
+  --gold-accent: #cfa856;
+  --gold-dark: #916c28;
+  --gold-glow: rgba(207, 168, 86, 0.4);
+
+  --wax-red: #8f1d1d;
+  --wax-dark: #5c0f0f;
+  --wax-hover: #aa2424;
+
+  --crimson: #7c1a22;
+  --emerald: #245c3b;
+  --sapphire: #1f456e;
+  --amethyst: #512e5f;
+  
+  --font-title: 'Cinzel', Georgia, serif;
+  --font-medieval: 'MedievalSharp', cursive, serif;
+  --font-body: 'Lora', Georgia, serif;
+  --font-accent: 'Marcellus', serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--leather-dark);
+  background-image: 
+    radial-gradient(circle at 50% 50%, rgba(68, 42, 26, 0.4) 0%, rgba(20, 12, 7, 0.95) 100%),
+    repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.05) 0px, rgba(0, 0, 0, 0.05) 2px, transparent 2px, transparent 4px);
+  color: var(--ink-dark);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+/* Scrollbar Vintage */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--leather-mid);
+  border-left: 1px solid var(--leather-border);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--gold-dark);
+  border: 2px solid var(--leather-mid);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-accent);
+}
+
+/* Moldura e Encadernação Externa */
+.tome-wrapper {
+  max-width: 1440px;
+  margin: 20px auto;
+  width: 96%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: var(--leather-mid);
+  border: 4px solid var(--gold-dark);
+  border-radius: 12px;
+  box-shadow: 
+    0 0 0 4px var(--leather-light),
+    0 0 0 8px var(--leather-dark),
+    0 25px 50px rgba(0,0,0,0.85);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Cantoneiras de Bronze */
+.corner-ornament {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  border-color: var(--gold-accent);
+  border-style: solid;
+  pointer-events: none;
+  z-index: 20;
+}
+.corner-tl { top: 6px; left: 6px; border-width: 3px 0 0 3px; border-top-left-radius: 4px; }
+.corner-tr { top: 6px; right: 6px; border-width: 3px 3px 0 0; border-top-right-radius: 4px; }
+.corner-bl { bottom: 6px; left: 6px; border-width: 0 0 3px 3px; border-bottom-left-radius: 4px; }
+.corner-br { bottom: 6px; right: 6px; border-width: 0 3px 3px 0; border-bottom-right-radius: 4px; }
+
+/* Cabeçalho do Grimório */
+.grimoire-header {
+  background: linear-gradient(180deg, #382114 0%, #25140b 100%);
+  border-bottom: 2px solid var(--gold-dark);
+  padding: 16px 24px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  color: #eedcc0;
+  position: relative;
+}
+
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.tome-sigil {
+  width: 44px;
+  height: 44px;
+  background: radial-gradient(circle, var(--gold-accent) 0%, var(--gold-dark) 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--leather-dark);
+  box-shadow: 0 0 12px var(--gold-glow);
+  border: 2px solid #fff2cc;
+}
+
+.tome-title-group h1 {
+  font-family: var(--font-title);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--gold-accent);
+  letter-spacing: 1.5px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
+
+.tome-title-group p {
+  font-size: 12px;
+  color: #c7b093;
+  font-family: var(--font-accent);
+  letter-spacing: 0.8px;
+}
+
+/* Controles de Campanha & Mestre no Cabeçalho */
+.header-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.campaign-selector-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--leather-border);
+}
+
+.campaign-select {
+  background: #1e1109;
+  border: 1px solid var(--gold-dark);
+  color: #f7eedb;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-family: var(--font-accent);
+  font-size: 13px;
+  cursor: pointer;
+  outline: none;
+}
+.campaign-select:focus {
+  border-color: var(--gold-accent);
+  box-shadow: 0 0 6px var(--gold-glow);
+}
+
+/* Botões Estilo Selo / Pergaminho */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 7px 14px;
+  border-radius: 5px;
+  font-family: var(--font-title);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn-wax {
+  background: linear-gradient(135deg, var(--wax-red) 0%, var(--wax-dark) 100%);
+  color: #fff1d8;
+  border: 1px solid #c93b3b;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.25);
+}
+.btn-wax:hover {
+  background: linear-gradient(135deg, var(--wax-hover) 0%, var(--wax-red) 100%);
+  box-shadow: 0 3px 10px rgba(169, 29, 29, 0.5);
+  transform: translateY(-1px);
+}
+
+.btn-gold {
+  background: linear-gradient(135deg, var(--gold-accent) 0%, var(--gold-dark) 100%);
+  color: var(--leather-dark);
+  border: 1px solid #fae19c;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+.btn-gold:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 0 10px var(--gold-glow);
+  transform: translateY(-1px);
+}
+
+.btn-leather {
+  background: var(--leather-light);
+  color: #e8d8b5;
+  border: 1px solid var(--leather-border);
+}
+.btn-leather:hover {
+  background: #563622;
+  color: #fff;
+}
+
+.btn-stealth-active {
+  background: #7a1d1d !important;
+  color: #ffd2d2 !important;
+  border-color: #ff6b6b !important;
+  animation: pulse-glow 2s infinite;
+}
+
+@keyframes pulse-glow {
+  0% { box-shadow: 0 0 4px rgba(235, 75, 75, 0.4); }
+  50% { box-shadow: 0 0 14px rgba(235, 75, 75, 0.8); }
+  100% { box-shadow: 0 0 4px rgba(235, 75, 75, 0.4); }
+}
+
+/* Barra de Abas (Book Ribbons / Tabs) */
+.tome-navigation {
+  background: #25160e;
+  border-bottom: 2px solid var(--parchment-border);
+  display: flex;
+  overflow-x: auto;
+  padding: 0 16px;
+  gap: 4px;
+}
+
+.tab-btn {
+  padding: 10px 18px;
+  background: #1b1009;
+  border: 1px solid var(--leather-border);
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+  color: #c7b093;
+  font-family: var(--font-title);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  position: relative;
+  white-space: nowrap;
+}
+.tab-btn:hover {
+  color: var(--gold-accent);
+  background: #2b180d;
+}
+.tab-btn.active {
+  background: var(--parchment-base);
+  color: var(--ink-dark);
+  border-color: var(--parchment-border);
+  border-bottom: 2px solid var(--parchment-base);
+  box-shadow: 0 -3px 8px rgba(0,0,0,0.3);
+  font-weight: 700;
+  top: 1px;
+  z-index: 10;
+}
+.tab-btn.active::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gold-accent);
+  border-radius: 6px 6px 0 0;
+}
+
+/* Corpo Principal das Páginas (Folhas de Pergaminho) */
+.tome-pages-container {
+  background-color: var(--parchment-base);
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(217, 196, 153, 0.3) 0%, transparent 60%),
+    radial-gradient(circle at 90% 80%, rgba(204, 180, 133, 0.4) 0%, transparent 50%),
+    linear-gradient(90deg, rgba(160, 126, 80, 0.15) 0%, transparent 4%, transparent 96%, rgba(160, 126, 80, 0.15) 100%);
+  padding: 30px;
+  flex: 1;
+  min-height: 600px;
+  box-shadow: inset 0 0 40px rgba(92, 60, 31, 0.15);
+  position: relative;
+}
+
+/* Faixas e Seções */
+.view-section {
+  display: none;
+  animation: fadeIn 0.3s ease-in-out;
+}
+.view-section.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.page-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--parchment-border);
+  padding-bottom: 14px;
+  margin-bottom: 24px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.page-title {
+  font-family: var(--font-title);
+  color: var(--crimson);
+  font-size: 26px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.page-subtitle {
+  font-family: var(--font-accent);
+  color: var(--ink-faded);
+  font-size: 14px;
+}
+
+/* Grade de Cards & Pergaminhos Menores */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.parchment-card {
+  background: var(--parchment-mid);
+  border: 1px solid var(--parchment-border);
+  border-radius: 6px;
+  padding: 18px;
+  box-shadow: 2px 3px 8px var(--parchment-shadow);
+  position: relative;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+.parchment-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 3px 6px 14px rgba(43, 24, 12, 0.22);
+  border-color: var(--gold-dark);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+  gap: 8px;
+  border-bottom: 1px dashed var(--parchment-border);
+  padding-bottom: 8px;
+}
+
+.card-title {
+  font-family: var(--font-title);
+  font-size: 18px;
+  color: var(--crimson);
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.card-badge {
+  font-family: var(--font-accent);
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.badge-allied { background: #d4ebd4; color: #1e5c2b; border: 1px solid #9fcf9f; }
+.badge-hostile { background: #fadad8; color: #8a1919; border: 1px solid #e89898; }
+.badge-neutral { background: #e8e2d3; color: #614d33; border: 1px solid #c9bea9; }
+.badge-legendary { background: #fdf2d2; color: #8f6206; border: 1px solid #e8b948; }
+.badge-rare { background: #d7e7f7; color: #1a4f82; border: 1px solid #8ab4df; }
+.badge-uncommon { background: #dff0e4; color: #236939; border: 1px solid #99cda9; }
+.badge-common { background: #eee8de; color: #5a5347; border: 1px solid #ccc0ae; }
+
+/* Destaque para Segredos do Mestre */
+.secret-card {
+  background: #f1e4d0;
+  border-left: 4px solid var(--wax-red);
+}
+
+.secret-content {
+  background: #ebd8bd;
+  border: 1px dashed #b89c72;
+  padding: 12px;
+  border-radius: 4px;
+  margin: 10px 0;
+  font-style: italic;
+  position: relative;
+  transition: filter 0.3s ease;
+}
+
+/* Efeito de Ocultamento em Modo Mestre Oculto */
+body.stealth-mode-active .secret-content {
+  filter: blur(8px);
+  user-select: none;
+  cursor: pointer;
+}
+body.stealth-mode-active .secret-card::after {
+  content: "🛡️ SEGREDO OCULTO DO MESTRE";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--wax-dark);
+  color: #fff2cc;
+  padding: 6px 14px;
+  font-family: var(--font-title);
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  border: 1px solid var(--gold-accent);
+  border-radius: 4px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  pointer-events: none;
+  z-index: 15;
+}
+
+/* Linha do Tempo de Sessões */
+.session-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.session-entry {
+  background: var(--parchment-mid);
+  border: 1px solid var(--parchment-border);
+  border-left: 6px solid var(--gold-dark);
+  border-radius: 6px;
+  padding: 20px;
+  box-shadow: 2px 3px 8px var(--parchment-shadow);
+}
+
+.session-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--parchment-border);
+  padding-bottom: 8px;
+}
+
+.session-number-badge {
+  font-family: var(--font-medieval);
+  background: var(--leather-mid);
+  color: var(--gold-accent);
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.session-date {
+  font-size: 13px;
+  color: var(--ink-faded);
+  font-style: italic;
+}
+
+.session-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--parchment-border);
+  font-size: 13px;
+}
+
+.meta-box strong {
+  color: var(--crimson);
+  display: block;
+  font-family: var(--font-title);
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+/* Bandeja / Rolador de Dados */
+.dice-tray-overlay {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 100;
+}
+
+.dice-toggle-btn {
+  width: 58px;
+  height: 58px;
+  background: radial-gradient(circle, var(--gold-accent) 0%, var(--gold-dark) 100%);
+  border: 3px solid #ffecb3;
+  border-radius: 50%;
+  color: var(--leather-dark);
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.6), 0 0 15px var(--gold-glow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  transition: all 0.25s ease;
+}
+.dice-toggle-btn:hover {
+  transform: scale(1.1) rotate(15deg);
+}
+
+.dice-panel {
+  position: fixed;
+  bottom: 92px;
+  right: 24px;
+  width: 360px;
+  max-width: 90vw;
+  background: var(--leather-mid);
+  border: 3px solid var(--gold-dark);
+  border-radius: 8px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.8);
+  display: none;
+  flex-direction: column;
+  z-index: 100;
+  overflow: hidden;
+  color: #eedcc0;
+}
+.dice-panel.active {
+  display: flex;
+}
+
+.dice-panel-header {
+  background: #1b1009;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--leather-border);
+  font-family: var(--font-title);
+  color: var(--gold-accent);
+}
+
+.dice-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  padding: 14px;
+  background: #25160e;
+}
+
+.dice-btn {
+  background: #382114;
+  border: 1px solid var(--leather-border);
+  color: #fae19c;
+  padding: 10px 4px;
+  border-radius: 6px;
+  font-family: var(--font-title);
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.dice-btn:hover {
+  background: var(--gold-dark);
+  color: var(--leather-dark);
+  border-color: var(--gold-accent);
+  transform: translateY(-2px);
+}
+
+.dice-controls {
+  padding: 10px 14px;
+  background: #1e1109;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 13px;
+  border-top: 1px solid var(--leather-border);
+}
+
+.dice-roll-result-area {
+  padding: 16px;
+  text-align: center;
+  background: radial-gradient(circle, #331d10 0%, #1a0e07 100%);
+  border-top: 1px solid var(--gold-dark);
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.result-total {
+  font-family: var(--font-title);
+  font-size: 38px;
+  font-weight: 900;
+  color: var(--gold-accent);
+  text-shadow: 0 0 10px var(--gold-glow);
+  line-height: 1;
+}
+
+.result-crit {
+  color: #4ade80 !important;
+  text-shadow: 0 0 15px rgba(74, 222, 128, 0.8) !important;
+  animation: pulse-glow 0.8s infinite;
+}
+
+.result-fail {
+  color: #f87171 !important;
+  text-shadow: 0 0 15px rgba(248, 113, 113, 0.8) !important;
+}
+
+.result-detail {
+  font-size: 12px;
+  color: #c7b093;
+  margin-top: 6px;
+}
+
+.dice-history-log {
+  max-height: 120px;
+  overflow-y: auto;
+  padding: 8px 14px;
+  font-size: 11px;
+  background: #140b05;
+  border-top: 1px solid #2a160b;
+}
+
+.history-entry {
+  padding: 3px 0;
+  border-bottom: 1px dashed #30190d;
+  display: flex;
+  justify-content: space-between;
+  color: #a69177;
+}
+
+/* Modais de Criação & Edição */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  z-index: 200;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+.modal-backdrop.active {
+  display: flex;
+}
+
+.modal-box {
+  background: var(--parchment-base);
+  border: 3px solid var(--gold-dark);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 620px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+  position: relative;
+  animation: modalEnter 0.25s ease-out;
+}
+
+@keyframes modalEnter {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.modal-header {
+  background: var(--leather-mid);
+  color: var(--gold-accent);
+  padding: 14px 20px;
+  border-bottom: 2px solid var(--gold-dark);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-title);
+  font-size: 18px;
+}
+
+.modal-body {
+  padding: 22px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  font-family: var(--font-title);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--crimson);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-input, .form-textarea, .form-select {
+  width: 100%;
+  padding: 9px 12px;
+  background: #fff8e8;
+  border: 1px solid var(--parchment-border);
+  border-radius: 4px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--ink-dark);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.form-input:focus, .form-textarea:focus, .form-select:focus {
+  border-color: var(--gold-dark);
+  box-shadow: 0 0 6px var(--parchment-shadow);
+  background: #ffffff;
+}
+
+.modal-footer {
+  padding: 14px 20px;
+  background: var(--parchment-mid);
+  border-top: 1px solid var(--parchment-border);
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* Toast de Notificação do Grimório */
+.tome-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--leather-dark);
+  color: var(--gold-accent);
+  border: 2px solid var(--gold-dark);
+  padding: 12px 24px;
+  border-radius: 6px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+  font-family: var(--font-title);
+  font-size: 13px;
+  z-index: 999;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.tome-toast.show {
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .tome-wrapper {
+    margin: 6px auto;
+    width: 98%;
+  }
+  .grimoire-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .header-actions {
+    justify-content: space-between;
+  }
+  .tome-pages-container {
+    padding: 16px;
+  }
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+}

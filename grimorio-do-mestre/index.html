@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>O Grimório do Mestre | Painel & Campanhas de RPG</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📜</text></svg>">
+</head>
+<body>
+
+  <!-- Estrutura do Livro Encadernado em Couro -->
+  <div class="tome-wrapper">
+    <!-- Cantoneiras Ornamentadas em Latão -->
+    <div class="corner-ornament corner-tl"></div>
+    <div class="corner-ornament corner-tr"></div>
+    <div class="corner-ornament corner-bl"></div>
+    <div class="corner-ornament corner-br"></div>
+
+    <!-- Cabeçalho do Grimório -->
+    <header class="grimoire-header">
+      <div class="brand-section">
+        <div class="tome-sigil">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path>
+            <path d="M6 6h10"></path>
+            <path d="M6 10h10"></path>
+            <path d="M6 14h6"></path>
+            <circle cx="15" cy="15" r="3"></circle>
+          </svg>
+        </div>
+        <div class="tome-title-group">
+          <h1>O GRIMÓRIO DO MESTRE</h1>
+          <p>Compêndio Sagrado de Campanhas, Segredos & Aventuras</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- Seletor de Campanhas Ativas -->
+        <div class="campaign-selector-box">
+          <label for="campaignSelect" style="font-size: 11px; font-family: var(--font-title); color: #d4bc9e;">CAMPANHA:</label>
+          <select id="campaignSelect" class="campaign-select"></select>
+        </div>
+
+        <!-- Modo Mestre Oculto (Anti-Spoiler) -->
+        <button id="btnToggleStealth" class="btn btn-leather" title="Oculte ou revele as anotações secretas caso os jogadores estejam olhando para a tela">
+          👁️ Mestre Oculto: OFF
+        </button>
+
+        <!-- Menu de Backup e Dados -->
+        <button class="btn btn-gold" onclick="app.exportBackup()" title="Baixar backup completo em JSON">
+          💾 Backup
+        </button>
+        <button class="btn btn-leather" onclick="app.importBackup()" title="Restaurar de arquivo JSON">
+          📂 Importar
+        </button>
+        <button class="btn btn-leather" onclick="app.resetToDefaultData()" title="Restaurar dados de exemplo">
+          🔄 Resetar
+        </button>
+      </div>
+    </header>
+
+    <!-- Marcadores de Página / Abas do Livro -->
+    <nav class="tome-navigation">
+      <button class="tab-btn active" data-tab="campanha">
+        📜 Visão Geral & Mesa
+      </button>
+      <button class="tab-btn" data-tab="sessoes">
+        📖 Diário de Sessões
+      </button>
+      <button class="tab-btn" data-tab="segredos">
+        🤫 Segredos do Mestre
+      </button>
+      <button class="tab-btn" data-tab="npcs">
+        👥 NPCs & Facções
+      </button>
+      <button class="tab-btn" data-tab="itens">
+        ⚔️ Itens & Relíquias
+      </button>
+      <button class="tab-btn" data-tab="mapas">
+        🗺️ Mapas & Locais
+      </button>
+    </nav>
+
+    <!-- Folhas de Pergaminho (Conteúdo das Abas) -->
+    <main class="tome-pages-container">
+
+      <!-- 1. Aba: Visão Geral da Campanha -->
+      <section id="section-campanha" class="view-section active">
+        <div class="page-header-row">
+          <div>
+            <h2 class="page-title">📜 Registro da Campanha</h2>
+            <p class="page-subtitle">Informações gerais, cenário, tom e fichas resumidas dos aventureiros</p>
+          </div>
+          <div style="display:flex; gap:10px;">
+            <button class="btn btn-wax" onclick="app.openNewCampaignModal()">➕ Criar Nova Campanha</button>
+          </div>
+        </div>
+        <div id="campaignOverviewContent"></div>
+      </section>
+
+      <!-- 2. Aba: Diário de Sessões -->
+      <section id="section-sessoes" class="view-section">
+        <div class="page-header-row">
+          <div>
+            <h2 class="page-title">📖 Diário das Crônicas</h2>
+            <p class="page-subtitle">Histórico de cada sessão, combates, recompensas e ganchos futuros</p>
+          </div>
+          <button class="btn btn-wax" onclick="app.openNewSessionModal()">➕ Registrar Nova Sessão</button>
+        </div>
+        <div id="sessionsList" class="session-timeline"></div>
+      </section>
+
+      <!-- 3. Aba: Segredos do Mestre -->
+      <section id="section-segredos" class="view-section">
+        <div class="page-header-row">
+          <div>
+            <h2 class="page-title">🤫 Cofre de Segredos do Mestre</h2>
+            <p class="page-subtitle">Reviravoltas planejadas, verdades ocultas e segredos de personagens (borrados no Modo Oculto)</p>
+          </div>
+          <button class="btn btn-wax" onclick="app.openNewSecretModal()">🔒 Selar Novo Segredo</button>
+        </div>
+        <div id="secretsGrid" class="cards-grid"></div>
+      </section>
+
+      <!-- 4. Aba: NPCs & Facções -->
+      <section id="section-npcs" class="view-section">
+        <div class="page-header-row">
+          <div>
+            <h2 class="page-title">👥 Figuras Notáveis & Facções</h2>
+            <p class="page-subtitle">Aliados, vilões, nobres, mercenários e lojistas com fichas rápidas</p>
+          </div>
+          <div style="display:flex; gap:10px;">
+            <button class="btn btn-gold" onclick="app.generateRandomNPC()">🎲 Gerar NPC Rápido</button>
+            <button class="btn btn-wax" onclick="app.openNewNPCModal()">➕ Criar NPC</button>
+          </div>
+        </div>
+        <div id="npcsGrid" class="cards-grid"></div>
+      </section>
+
+      <!-- 5. Aba: Itens & Tesouros -->
+      <section id="section-itens" class="view-section">
+        <div class="page-header-row">
+          <div>
+            <h2 class="page-title">⚔️ Arsenal & Relíquias Arcanas</h2>
+            <p class="page-subtitle">Armas mágicas, artefatos ancestrais, poções e tesouros da aventura</p>
+          </div>
+          <button class="btn btn-wax" onclick="app.openNewItemModal()">➕ Adicionar Item</button>
+        </div>
+        <div id="itemsGrid" class="cards-grid"></div>
+      </section>
+
+      <!-- 6. Aba: Mapas & Locais -->
+      <section id="section-mapas" class="view-section">
+        <div class="page-header-row">
+          <div>
+            <h2 class="page-title">🗺️ Atlas & Geografia de Batalha</h2>
+            <p class="page-subtitle">Cidades, masmorras, ruínas antigas e referências cartográficas</p>
+          </div>
+          <button class="btn btn-wax" onclick="app.openNewLocationModal()">➕ Mapear Local</button>
+        </div>
+        <div id="locationsGrid" class="cards-grid"></div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Botão Flutuante e Painel do Rolador de Dados -->
+  <div class="dice-tray-overlay">
+    <button id="diceToggleBtn" class="dice-toggle-btn" title="Abrir Rolador de Dados do Mestre">
+      🎲
+    </button>
+
+    <div id="dicePanel" class="dice-panel">
+      <div class="dice-panel-header">
+        <span>🎲 ROLADOR DE DADOS</span>
+        <button style="background:transparent; border:none; color:#c7b093; cursor:pointer; font-size:16px;" onclick="document.getElementById('dicePanel').classList.remove('active')">✕</button>
+      </div>
+
+      <div class="dice-grid">
+        <button class="dice-btn" onclick="app.rollDice(4)"><span>d4</span><small>Pirâmide</small></button>
+        <button class="dice-btn" onclick="app.rollDice(6)"><span>d6</span><small>Cubo</small></button>
+        <button class="dice-btn" onclick="app.rollDice(8)"><span>d8</span><small>Octaedro</small></button>
+        <button class="dice-btn" onclick="app.rollDice(10)"><span>d10</span><small>Dezena</small></button>
+        <button class="dice-btn" onclick="app.rollDice(12)"><span>d12</span><small>Dodecaedro</small></button>
+        <button class="dice-btn" onclick="app.rollDice(20)" style="background:#521818; border-color:#c93b3b; color:#fff;"><span>d20</span><small>Clássico</small></button>
+        <button class="dice-btn" onclick="app.rollDice(100)"><span>d100</span><small>Porcentagem</small></button>
+        <button class="dice-btn" onclick="app.rollDice(2)"><span>d2</span><small>Moeda</small></button>
+      </div>
+
+      <div class="dice-controls">
+        <label>
+          Qtd:
+          <input type="number" id="diceCountInput" value="1" min="1" max="20" style="width:48px; background:#140b05; border:1px solid var(--leather-border); color:#eedcc0; border-radius:3px; padding:2px 4px; text-align:center;">
+        </label>
+        <label>
+          Bônus (+/-):
+          <input type="number" id="diceModInput" value="0" style="width:52px; background:#140b05; border:1px solid var(--leather-border); color:#eedcc0; border-radius:3px; padding:2px 4px; text-align:center;">
+        </label>
+      </div>
+
+      <!-- Resultado da Rolagem -->
+      <div class="dice-roll-result-area">
+        <div id="diceResultTotal" class="result-total">—</div>
+        <div id="diceResultDetail" class="result-detail">Escolha um dado acima para rolar</div>
+      </div>
+
+      <!-- Histórico de Rolagens -->
+      <div class="dice-history-log" id="diceHistoryList">
+        <div style="text-align:center; color:#785a43; font-style:italic;">Histórico de rolagens aparecerá aqui</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Genérico para Formulários -->
+  <div id="modalBackdrop" class="modal-backdrop">
+    <div id="modalContainer" class="modal-box"></div>
+  </div>
+
+  <!-- Toast de Notificações -->
+  <div id="grimoireToast" class="tome-toast"></div>
+
+  <!-- Scripts -->
+  <script src="sample-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
